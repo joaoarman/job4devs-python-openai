@@ -1,0 +1,206 @@
+{% extends "baseTemplate.html" %}
+
+{% block title %}
+    Página Inicial
+{% endblock %}
+
+{% block content %}
+    
+    <style>
+
+        .pageHeader {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+
+        .div {
+            width: 90%;
+            max-width: 1000px;
+
+            height: 250px;
+
+            border: 2px dashed black;
+
+            display: flex;
+            flex-direction: column;
+
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+
+            gap: 10px;
+        }
+
+        [data-bs-theme="dark"] .div.dragover {
+            background-color: rgb(98, 98, 98); /* Borda branca no modo escuro */
+        }
+       
+        [data-bs-theme="light"] .div.dragover {
+            background-color: rgb(198, 198, 198); /* Borda branca no modo escuro */
+        }
+
+
+        /* Alteração da cor da borda no modo escuro */
+        [data-bs-theme="dark"] .div {
+            border-color: white; /* Borda branca no modo escuro */
+        }
+
+        i {
+            font-size: 32pt;
+            margin-bottom: 15px;
+        }
+
+        
+        .chooseFileBtn {
+            width: auto; 
+            padding: 10px 20px;
+            margin-bottom: 10px; 
+        }
+
+        .chooseOtherFileBtn {
+            width: 50px;
+            margin-top: 25px;
+        }
+
+        .submitBtnDiv {
+            width: 90%;
+            max-width: 1000px;
+
+            margin-top: 10px;
+
+            display: flex;
+            flex-direction: row;
+
+            justify-content: flex-end;
+        }
+
+        
+
+    </style>
+
+    <link rel="stylesheet" href="../../static/checkText/checkText.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+    <div class="pageHeader">
+        <h1>Verificar Texto</h1>
+        <span>Apenas arquivos <b>.PDF</b> são aceitos</span>
+    </div>
+    
+    <div id="dropZone" class="div">
+        <form id="form" action="checkText/result" method="post" enctype="multipart/form-data">
+            <input type="file" id="fileInput" name="curriculumFile" accept=".pdf" style="display: none;">
+        </form>
+        <i id="uploadIcon" class="uploadIcon fa-solid fa-upload"></i>
+        <button id="chooseFileBtn" class="btn btn-danger chooseFileBtn">Selecionar Currículo</button>
+        <span id="description">ou solte o arquivo aqui</span>
+        <br id="brElement" style="display: none;">
+        <button id="chooseOtherFileBtn" style="display: none;" class="btn btn-danger">Escolher outro Arquivo</button>
+    </div>
+
+    <div class="submitBtnDiv">
+        <button id="submitBtn" class="btn btn-danger">Enviar</button>
+    </div>
+
+    
+
+    <script>
+
+        const form = document.getElementById('form');
+        const chooseFileBtn = document.getElementById('chooseFileBtn');
+        const submitBtn = document.getElementById('submitBtn');
+        const dropZone = document.getElementById('dropZone');
+        const fileInput = document.getElementById('fileInput');
+        const uploadIcon = document.getElementById('uploadIcon');
+        const chooseOtherFileBtn = document.getElementById('chooseOtherFileBtn');
+        const description = document.getElementById('description');
+        const brElement = document.getElementById('brElement');
+        
+        window.addEventListener('pageshow', (event) => {
+            form.reset();
+            resetUI();
+        });
+
+        function resetUI() {
+            fileInput.reset();
+            chooseFileBtn.style.display = 'block';
+            uploadIcon.style.display = 'block';
+            chooseOtherFileBtn.style.display = 'none';
+            brElement.style.display = 'none';
+            description.innerHTML = 'ou solte o arquivo aqui';
+        }
+    
+        // Função para atualizar a interface após a seleção do arquivo
+        function updateUI(fileName) {
+            chooseFileBtn.style.display = 'none';
+            uploadIcon.style.display = 'none';
+            chooseOtherFileBtn.style.display = 'block';
+            brElement.style.display = 'block';
+            description.innerHTML = `<b>Arquivo Selecionado:</b> <br>${fileName}`;
+        }
+    
+        // Clique no botão "Selecionar Currículo" abre o seletor de arquivos
+        chooseFileBtn.addEventListener('click', () => {
+            fileInput.click();
+        });
+    
+        // Quando o arquivo é selecionado via seletor de arquivos
+        fileInput.addEventListener('change', () => {
+            const file = fileInput.files[0];
+            updateUI(file.name);
+        });
+    
+        // Clique no botão "Escolher outro Arquivo"
+        chooseOtherFileBtn.addEventListener('click', () => {
+            chooseFileBtn.click();
+        });
+    
+        // Submit do formulário
+        submitBtn.addEventListener('click', (event) => {
+            event.preventDefault(); 
+            if (fileInput.files.length > 0) {
+                form.submit();
+            } else {
+                alert('Por favor, selecione um arquivo antes de enviar.');
+            }
+        });
+    
+        // Eventos de Drag-and-Drop
+        ['dragenter', 'dragover'].forEach(eventName => {
+            dropZone.addEventListener(eventName, (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                dropZone.classList.add('dragover');
+            }, false);
+        });
+    
+        ['dragleave', 'drop'].forEach(eventName => {
+            dropZone.addEventListener(eventName, (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                dropZone.classList.remove('dragover');
+            }, false);
+        });
+    
+        dropZone.addEventListener('drop', (e) => {
+            const dt = e.dataTransfer;
+            const files = dt.files;
+    
+            if (files.length > 0) {
+                const file = files[0];
+                if (file.type === 'application/pdf') {
+                    fileInput.files = files; // Define o arquivo no input
+                    updateUI(file.name);
+                } else {
+                    alert('Apenas arquivos .PDF são aceitos.');
+                }
+            }
+        });
+
+
+        
+
+    </script>
+    
+
+{% endblock %}

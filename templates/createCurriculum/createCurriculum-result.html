@@ -1,0 +1,133 @@
+<style>
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+
+        font-family: Arial, Helvetica, sans-serif;
+    }
+
+    body {
+        width: 21cm;
+        height: 29.7cm;
+        margin: 0 auto;
+        padding: 1cm; 
+    }
+
+    header h1{
+        text-align: center;
+    }
+
+    .headerInfos {
+        text-align: center;
+    }
+
+    /* ---------- SKILLS ---------- */
+    .skills-main-div {
+        width: 100%;
+        text-align: justify;
+    }
+
+
+    /* ---------- EXPERIENCES ---------- */
+    .experiences-main-div {
+        width: 100%;
+    }
+
+    .experience-div {
+        width: 100%;
+    }
+
+    .companyName-and-dates {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .companyName {
+        font-weight: bold;
+    }
+
+    .dates {
+        font-weight: bold;
+    }
+
+    .companyPosition {
+        font-style: italic;
+    }
+
+    .companyDescription {
+        white-space: pre-wrap; /* Mantém quebras de linha inseridas manualmente */
+        word-wrap: break-word; /* Quebra as palavras muito longas que ultrapassam a div */
+        overflow-wrap: break-word;
+        text-align: justify;
+    }
+
+</style>
+
+
+<body>
+
+    <!-- ---------- HEADER ---------- -->
+   <header>
+        <h1> {{ result.name }} </h1>
+        <div class="headerInfos">
+            <span> {{ result.phone }} | </span>
+            <span> {{ result.email }} | </span>
+            <span> <a href="{{ result.linkedin }}"> Linkedin </a> | </span>
+            <span> <a href="{{ result.github }}"> GitHub</a> </span>
+        </div>
+   </header>
+
+
+   <!-- ---------- SKILLS ---------- -->
+   <div class="skills-main-div">
+        <h2>Habilidades</h2>
+        <hr>
+        {% for skill in result.skills %}
+            <span>  
+                {{ skill }} 
+                {% if not loop.last %} | {% endif %}
+            </span>
+        {% endfor %}
+   </div>
+
+
+   <!-- ---------- EXPERIENCES ---------- -->
+   <div class="experiences-main-div">
+        <h2>Experiências</h2>
+        <hr>
+        {% for experience in result.experiences.values() %}
+            <div class="experience-div">
+                <div class="companyName-and-dates">
+                    <span class="companyName"> {{ experience.companyName }} </span>
+                    <div>
+                        <span class="dates"> ({{ experience.companyStartDate }} - {{ experience.companyEndDate }}) </span>
+                    </div>
+                </div>
+                
+
+                <span class="companyPosition"> {{ experience.companyPosition }} </span>
+                <br>
+                <br>
+                <br>
+                <div class="companyDescription"> {{ experience.companyDescription|safe }} </div>
+            </div>
+        {% endfor %} 
+   </div>
+
+
+   <!-- ---------- EDUCATION ---------- -->
+   
+
+
+   <!-- ---------- PROJECTS ---------- -->
+
+   <br>
+   <br>
+   <br>
+   <br>
+   <br>
+
+    
+</body>

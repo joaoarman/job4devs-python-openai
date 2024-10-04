@@ -1,0 +1,588 @@
+{% extends "baseTemplate.html" %}
+
+{% block title %}
+    Página Inicial
+{% endblock %}
+
+{% block content %}
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+
+    <style>
+
+        .pageHeaderDiv {
+            width: 100%;
+            text-align: center;
+            margin-bottom: 75px;
+        }
+
+        .styled-hr {
+            border: 1px solid white;
+            width: 100%; /* Define a largura da linha */
+            height: 2px; /* Define a altura da linha */
+            background-color: #ffffff; /* Cor da linha (usando a cor do botão 'danger' para manter a consistência) */
+            z-index: 100;
+            margin-bottom: 20px;
+        }
+
+        [data-bs-theme="light"] .styled-hr {
+            border: 1px solid rgb(0, 0, 0)
+        }
+
+        .styled-hr2 {
+            border: 1px solid white;
+            width: 100%; 
+            height: 2px; 
+            background-color: #ffffff; /* Cor da linha (usando a cor do botão 'danger' para manter a consistência) */
+            z-index: 100;
+            margin-top: 50px;
+            margin-bottom: 60px;
+        }
+
+        [data-bs-theme="light"] .styled-hr2 {
+            border: 1px solid rgb(0, 0, 0)
+        }
+
+        .formHeaderInfo {
+            width: 100%;
+            text-align: left;
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        /* EXPERIÊNCIA PROFISSIONAL */
+            .professionalExperienceMainDiv {
+                width: 100%;
+            }  
+
+            .addExperienceBtn {
+                width: 200px;
+                margin-left: auto;
+            }
+
+            .removeExperienceBtnDiv {
+                width: 100%;
+
+                display: flex;
+                justify-content: flex-end;
+            }
+            
+            
+
+        /* EDUCAÇÃO */
+            .educationExperienceMainDiv{
+                width: 100%;
+            }
+
+            .addEducationeBtn {
+                width: 200px;
+                margin-left: auto;
+            }
+
+            .removeEducationBtnDiv {
+                width: 100%;
+
+                display: flex;
+                justify-content: flex-end;
+            }
+
+
+        /* PROJETOS */
+            .personalProjetctsMainDiv {
+                width: 100%;
+            }
+
+            .addProjectBtn {
+                width: 200px;
+                margin-bottom: 20px;
+            }
+
+            .removeProjectBtnDiv {
+                width: 100%;
+
+                display: flex;
+                justify-content: flex-end;
+            }
+
+
+        /* HABILIDADES */
+            .personalSkillsMainDiv {
+                width: 100%;
+            }
+
+            .skill {
+                display: flex;
+
+                justify-content: center;
+                align-items: center;
+                gap: 5px; 
+            }
+
+            .skill2 {
+                display: flex;
+
+                justify-content: center;
+                align-items: center;
+                gap: 5px;
+            }
+
+ 
+
+    </style>
+
+    <div class="pageHeaderDiv">
+        <h1>Gerador de Currículo</h1>
+        <span>Gere seu currículo a partir do padrão de <b>HARVARD</b></span>
+    </div>
+    
+
+    <!-- <hr class="styled-hr"> -->
+
+
+    <span class="formHeaderInfo">1. Informações Pessoais</span>
+
+    <form id="createCurriculumForm" action="/createCurriculum/result" method="post" enctype="multipart/form-data">
+
+    <!-- INFORMAÇÕES PESSOAIS -->
+        <div class="personalInfosDiv row g-3 needs-validation" novalidate>
+            
+            <!-- Nome -->
+            <div class="col-md-4">
+                <label for="userName" class="form-label">Nome Completo: </label>
+                <input type="text" class="form-control" name="userName" id="userName" required>
+
+                <div class="valid-feedback">
+                    
+                </div>
+            </div>
+            
+            <!-- Telefone -->
+            <div class="col-md-4">
+                <label for="telephone" class="form-label">Telefone: </label>
+                <input type="text" class="form-control" name="telephone" id="telephone" aria-describedby="inputGroupPrepend" required>
+                
+                <div class="invalid-feedback">
+
+                </div>
+            </div>
+
+            <!-- Email -->
+            <div class="col-md-4">
+                <label for="email" class="form-label">Email: </label>
+                <input type="text" class="form-control" name="email" id="email" required>
+
+                <div class="invalid-feedback">
+
+                </div>
+            </div>
+
+            <!-- Linkedin -->
+            <div class="col-md-4">
+                <label for="linkedin" class="form-label">Linkedin: </label>
+                <input type="text" class="form-control" name="linkedin" id="linkedin">
+
+                <div class="invalid-feedback">
+
+                </div>
+            </div>
+
+            <!-- Github -->
+            <div class="col-md-4">
+                <label for="github" class="form-label">Github: </label>
+                <input type="text" class="form-control" name="github" id="github">
+
+                <div class="invalid-feedback">
+
+                </div>
+            </div>
+
+            <!-- País -->
+            <div class="col-md-4">
+                <label for="country" class="form-label">País: </label>
+                <input type="text" class="form-control" name="country" id="country" value="Brasil" disabled>
+
+                <div class="invalid-feedback">
+
+                </div>
+            </div>
+        </div>
+
+        <hr class="styled-hr">
+
+        <br>
+        <br>
+
+
+    <!-- EXPERIÊNCIA PROFISSIONAL -->
+        <span class="formHeaderInfo">2. Experiência Profissional: </span>
+        <div id="professionalExperienceMainDiv" class="professionalExperienceMainDiv">
+
+            <button type="button" id="addExperienceBtn" class="btn btn-danger mb-5 addExperienceBtn">Adicionar Experiência</button>
+        </div>
+
+        <br>
+
+
+    <!-- EDUCAÇÃO -->
+        <span class="formHeaderInfo">3. Educação: </span>
+        <div id="educationExperienceMainDiv" class="educationExperienceMainDiv" novalidate>
+            
+            <button type="button" id="addEducationeBtn" class="btn btn-danger mb-5 addEducationeBtn">Adicionar Educação</button>
+        </div>
+
+        <br>
+    
+
+    <!-- PROJETOS -->
+        <span class="formHeaderInfo">4. Projetos: </span>
+        <div id="personalProjetctsMainDiv" class="personalProjetctsMainDiv" novalidate>
+            
+            <button type="button" id="addProjectBtn" class="btn btn-danger mb-5 addProjectBtn">Adicionar Projeto</button>
+        </div>
+
+        <br>
+
+    <!-- HABILIDADES -->
+        <span class="formHeaderInfo">5. Habilidades: </span>
+        <div id="personalSkillsMainDiv" class="personalSkillsMainDiv" novalidate>
+
+            <div class="d-flex mb-3">
+                <input type="text" id="newSkillInput" class="form-control flex-grow-1 me-3" placeholder="Nova habilidade...">
+                <button id="addSkillBtn" class="btn btn-danger">Adicionar</button>
+            </div>
+
+            <div id="skillsDiv" class="row g-3">
+
+            </div>
+                  
+        </div>
+
+        <br>
+        
+        <input type="submit" id="submitBtn" class="btn btn-danger" value="Gerar Currículo"></input>
+    </form>
+
+
+
+        <br>
+        <br><br><br><br><br>
+    <script>
+
+        /**/
+        /**/
+        /**/
+        /**/
+        /**/
+        /* --------------- EXPERIÊNCIA PROFISSIONAL --------------- */
+            const addExperienceBtn = document.getElementById('addExperienceBtn');
+            const professionalExperienceMainDiv = document.getElementById('professionalExperienceMainDiv');
+            const stillWorkingCheckbox = document.getElementById('stillWorkingCheckbox');
+        
+            var experienceCount = 0;
+
+            addExperienceBtn.addEventListener('click', () => {
+                experienceCount++
+                professionalExperienceMainDiv.insertAdjacentHTML('beforeend',`
+                <div id="experience_${experienceCount}" class="professionalExperienceDiv row g-3 needs-validation" novalidate>
+                    <div class="col-md-6">
+                        <label for="company_${experienceCount}" class="form-label">Empresa: </label> 
+                        <input type="text" class="form-control" name="companyName[]" id="company_${experienceCount}" required>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label for="position_${experienceCount}" class="form-label">Cargo: </label>
+                        <input type="text" class="form-control" name="companyPosition[]" id="position_${experienceCount}" required>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label for="startDate_${experienceCount}" class="form-label">Data de Início: </label>
+                        <input type="date" class="form-control" name="companyStartDate[]" id="startDate_${experienceCount}" required>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label for="endDate_${experienceCount}" class="form-label" id="endDateLabel_${experienceCount}">Data de Término: </label>
+                        <input type="date" class="form-control" name="companyEndDate[]" id="endDate_${experienceCount}" required>
+                        <!-- Checkbox para indicar que ainda está na experiência -->
+                        <div class="mt-3">
+                            <input name="stillWorking[]" class="form-check-input stillWorkingCheckbox" type="checkbox" id="stillWorking_${experienceCount}">
+                            <label class="form-check-label" for="stillWorking_${experienceCount}">
+                                Ainda estou nessa experiência
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <label for="description_${experienceCount}" class="form-label">Descrição: </label>
+                        <textarea class="form-control" name="companyDescription[]" id="description_${experienceCount}" rows="3" required></textarea>
+                    </div>
+
+                    <div class="removeExperienceBtnDiv">
+                        <button type="button" class="btn btn-danger removeExperienceBtn" experience-id="experience_${experienceCount}">
+                            <i class="bi bi-trash removeExperienceIcon"></i>
+                        </button>
+                    </div>
+                    
+                    <hr class="styled-hr2">
+                </div>`
+                );
+            });
+
+            professionalExperienceMainDiv.addEventListener('change', (e) => {
+                if (e.target.classList.contains('stillWorkingCheckbox')) {
+                    const experienceId = e.target.id.split('_')[1]; // Extrai o número da experiência
+                    const endDataLabel = document.getElementById(`endDateLabel_${experienceId}`);
+                    const endDateInput = document.getElementById(`endDate_${experienceId}`);
+
+                    if (e.target.checked) {
+                        endDateInput.disabled = true;
+                        stillWorkingCheckbox.value = 1;
+                        
+
+                        /* endDateInput.style.display = 'none';
+                        endDataLabel.style.display = 'none'; */
+                    } else {
+                        endDateInput.disabled = false;
+                        stillWorkingCheckbox.value = 0;
+                        /* endDateInput.style.display = 'block';
+                        endDataLabel.style.display = 'block'; */
+                    }
+                }
+            });
+
+            professionalExperienceMainDiv.addEventListener('click', (e) => {
+                const removeBtn = e.target.closest('.removeExperienceBtn');
+                if (removeBtn) {
+                    const experienceId = removeBtn.getAttribute('experience-id');
+                    const experienceDiv = document.getElementById(experienceId); 
+                    if (experienceDiv) {
+                        experienceDiv.remove(); 
+                    }
+                }
+            });
+
+
+        /**/
+        /**/
+        /**/
+        /**/
+        /**/
+        /* --------------- EDUCAÇÃO --------------- */   
+            const addEducationeBtn = document.getElementById('addEducationeBtn');
+            const educationExperienceMainDiv = document.getElementById('educationExperienceMainDiv');
+        
+            var educationCount = 0;
+
+            addEducationeBtn.addEventListener('click', () => {
+                educationCount++
+
+                educationExperienceMainDiv.insertAdjacentHTML('beforeend',`
+                    <div id="education_${educationCount}" class="educationExperienceDiv row g-3 needs-validation" novalidate>
+
+                        <div class="col-md-6">
+                            <label for="institution_${educationCount}" class="form-label">Instituição: </label> 
+                            <input type="text" class="form-control" name="institution[]" id="institution_${educationCount}" required>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label for="course_${educationCount}" class="form-label">Curso: </label> 
+                            <input type="text" class="form-control" name="course[]" id="course_${educationCount}" required>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label for="educationStartDate_${educationCount}" class="form-label">Data de Início: </label>
+                            <input type="date" class="form-control" name="edutaionStartDate[]" id="educationStartDate_${educationCount}" required>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label for="educationEndDate_${educationCount}" class="form-label" id="educationEndDateLabel_${educationCount}">Data de Término: </label>
+                            <input type="date" class="form-control" name="educationEndDate[]" id="educationEndDate_${educationCount}">
+                            <!-- Checkbox para indicar que ainda está cursando -->
+                            <div class="mt-3">
+                                <input name="stillStudying[]" class="form-check-input stillStudyingCheckbox" type="checkbox" id="stillStudying_${educationCount}">
+                                <label class="form-check-label" for="stillStudying_${educationCount}">
+                                    Ainda estou estudando
+                                </label>
+                            </div>
+                            
+                        </div>
+
+                        <div class="col-md-12">
+                            <label for="educationDescription_${educationCount}" class="form-label">Descrição: </label>
+                            <textarea class="form-control" name="educationDescription[]" id="educationDescription_${educationCount}" rows="3" required></textarea>
+                        </div>
+
+                        <div class="removeEducationBtnDiv">
+                            <button type="button" class="btn btn-danger removeEducationBtn" education-id="education_${educationCount}">
+                                <i class="bi bi-trash removeEducationIcon"></i>
+                            </button>
+                        </div>
+                        
+                        <hr class="styled-hr2">
+                    </div>`
+                );     
+            });
+
+            educationExperienceMainDiv.addEventListener('change', (e) => {
+                if (e.target.classList.contains('stillStudyingCheckbox')) {
+                    const educationId = e.target.id.split('_')[1]; // Extrai o número da experiência
+                    const educationEndDataLabel = document.getElementById(`educationEndDateLabel_${educationId}`);
+                    const educationEndDateInput = document.getElementById(`educationEndDate_${educationId}`);
+
+                    if (e.target.checked) {
+                        educationEndDateInput.value = '';  
+                        educationEndDateInput.disabled = true;
+                        /* endDateInput.style.display = 'none';
+                        endDataLabel.style.display = 'none'; */
+                    } else {
+                        educationEndDateInput.disabled = false;
+                        /* endDateInput.style.display = 'block';
+                        endDataLabel.style.display = 'block'; */
+                    }
+                }
+            });
+
+            educationExperienceMainDiv.addEventListener('click', (e) => {
+                const educationRemoveBtn = e.target.closest('.removeEducationBtn'); 
+                if (educationRemoveBtn) {
+                    const educationId = educationRemoveBtn.getAttribute('education-id'); 
+                    const educationDiv = document.getElementById(educationId); 
+                    if (educationDiv) {
+                        educationDiv.remove(); 
+                    }
+                }
+            });
+
+
+        /**/
+        /**/
+        /**/
+        /**/
+        /**/
+        /* --------------- PROJETOS --------------- */   
+        const addProjectBtn = document.getElementById('addProjectBtn');
+        const personalProjetctsMainDiv = document.getElementById('personalProjetctsMainDiv');
+
+        var projectCount = 0;
+
+        addProjectBtn.addEventListener('click', function() {
+
+            projectCount++
+
+            personalProjetctsMainDiv.insertAdjacentHTML('beforeend',`
+            
+                <div id="project_${projectCount}" class="projectDiv row g-3 needs-validation" novalidate>
+
+                    <div class="col-md-6">
+                        <label for="projectName_${projectCount}" class="form-label">Nome do Projeto: </label> 
+                        <input type="text" class="form-control" name="projetctName[]" id="projectName_${projectCount}" required>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label for="projectLink_${projectCount}" class="form-label">Link: </label> 
+                        <input type="text" class="form-control" name="projectLink[]" id="projectLink_${projectCount}" placeholder="GitHub ou URL da aplicação...">
+                    </div>
+
+                    <div class="col-md-12">
+                        <label for="projectDescription_${projectCount}" class="form-label">Descrição: </label>
+                        <textarea class="form-control" name="projectDescription[]" id="projectDescription_${projectCount}" rows="3" placeHolder=""></textarea>
+                    </div>
+
+                    <div class="removeProjectBtnDiv">
+                        <button type="button" class="btn btn-danger removeProjectBtn" project-id="project_${projectCount}">
+                            <i class="bi bi-trash removeProjectIcon"></i>
+                        </button>
+                    </div>
+
+                    <hr class="styled-hr2">
+
+                </div>
+            
+            `);  
+        });
+
+        personalProjetctsMainDiv.addEventListener('click', (e) => {
+            const projectRemoveBtn = e.target.closest('.removeProjectBtn');
+            if (projectRemoveBtn) {
+                const projectId = projectRemoveBtn.getAttribute('project-id');
+                const projectDiv = document.getElementById(projectId); 
+                if (projectDiv) {
+                    projectDiv.remove(); 
+                }
+            }
+        });
+
+        
+        /**/
+        /**/
+        /**/
+        /**/
+        /**/
+        /* --------------- HABILIDADES --------------- */   
+            const addSkillBtn = document.getElementById('addSkillBtn');
+            const newSkillInput = document.getElementById('newSkillInput');
+            const skillsDiv = document.getElementById('skillsDiv');
+            var skillCount = 0;
+
+            const addSkill = () => {
+                skillCount++;
+                if(newSkillInput.value != "") {
+                    skillsDiv.insertAdjacentHTML('beforeend',`
+                        <div id="skill-${skillCount}" class="skill col-6 col-md-3">
+                            <div class="form-control skill2">
+                                ${newSkillInput.value}
+                                <i style="cursor: pointer;" class="bi bi-trash deleteSkill" data-id="skill-${skillCount}"></i>
+                            </div>
+                        </div>
+                        <input type="hidden" name="skills[]" value="${newSkillInput.value}">
+                    `);
+                    
+                    newSkillInput.value = '';
+                    newSkillInput.focus();
+                }      
+            }
+
+            addSkillBtn.addEventListener('click', addSkill);
+
+            newSkillInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    addSkill();
+                }
+            });
+
+            skillsDiv.addEventListener('click', (event) => {
+                if (event.target.classList.contains('deleteSkill')) {
+                    const skillId = event.target.getAttribute('data-id');
+                    const skillToRemove = document.getElementById(skillId);
+                    if (skillToRemove) {
+                        skillToRemove.remove();
+                    }
+                }
+            });
+
+
+        /**/
+        /**/
+        /**/
+        /**/
+        /**/
+        /* --------------- FORM SUBMIT ---------------*/   
+        const form = document.getElementById('createCurriculumForm');
+        const inputFields = document.querySelectorAll('#createCurriculumForm input');
+
+        inputFields.forEach(input => {
+            input.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault(); 
+                }
+            });
+        });
+
+
+    </script>
+
+
+   
+    
+{% endblock %}

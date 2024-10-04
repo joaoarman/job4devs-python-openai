@@ -1,0 +1,157 @@
+{% extends "baseTemplate.html" %}
+
+{% block title %}
+    Página Inicial
+{% endblock %}
+
+{% block content %}
+
+<style>
+
+    
+    .backBtnDiv {
+        width: 100%;
+        margin-top: 10px;
+    }
+
+    .backBtnDiv button {
+        width: 100px;
+        margin-right: auto;
+    }
+    
+    .pageHeaderDiv {
+        width: 100%;
+        text-align: center;
+        margin-top: 35px;
+        margin-bottom: 25px;
+    }
+
+    .styled-hr-title {
+        border: 1px solid white;
+        width: 100%; /* Define a largura da linha */
+        height: 2px; /* Define a altura da linha */
+        background-color: #ffffff; /* Cor da linha (usando a cor do botão 'danger' para manter a consistência) */
+        z-index: 100;
+        margin-bottom: 20px;
+    }
+
+    /* ---------------------------------------------------------- */
+    
+    .analysisDiv {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .aiName {
+        margin-right: auto;
+        /* text-align: center; */
+        margin-bottom: 20px;
+    }
+
+    .percentageCircle {
+        width: 150px;
+        height: 150px;
+        
+        border-radius: 50%;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .percentageCircle span {
+        font-size: 24pt;
+    }
+
+    .analysisComment {
+        width: 100%;
+        text-align: justify;
+        margin-top: 20px;
+        font-size: 16px; /* ou qualquer tamanho adequado */
+        line-height: 1.6; /* ajusta o espaçamento entre as linhas */
+        margin-bottom: 20px; /* espaçamento ao final do parágrafo */
+        padding: 10px; /* espaçamento interno, se necessário */
+        text-indent: 30px; /* indenta a primeira linha do parágrafo */
+    }
+
+    .styled-hr {
+        border: 1px solid white;
+        width: 100%; /* Define a largura da linha */
+        height: 2px; /* Define a altura da linha */
+        background-color: #ffffff; /* Cor da linha (usando a cor do botão 'danger' para manter a consistência) */
+        z-index: 100;
+        margin-bottom: 40px;
+    }
+
+    [data-bs-theme="light"] .styled-hr {
+        border: 1px solid rgb(0, 0, 0)
+    }
+
+
+
+    /* ---------------------------------------------------------- */
+
+    
+
+</style>
+
+    <div class="backBtnDiv">
+        <button type="button" class="btn btn-danger" onclick="window.history.back()">Voltar</button>
+    </div>  
+    
+    <div class="pageHeaderDiv">
+        <h1>Resultados da Análise</h1>
+        <!-- <hr class="styled-hr-title"> -->
+    </div>
+    <!-- Muito Bom -->
+    <!-- Bom -->
+    <!-- Regular -->
+    <!-- Ruim -->
+    
+    <!-- ---------------------------------------------------------- -->
+    
+
+    <div class="analysisDiv">
+
+        <div class="aiName">
+            <h3>- ChatGPT: </h3>
+        </div>
+
+        <div class="percentageCircle">
+            <span id="progressValue" value="25"> {{ result[0] }}</span>
+        </div>
+
+        <p class="analysisComment">
+            {{ result[1] }}
+        </p>
+        <hr class="styled-hr">
+    </div>
+
+    
+    <!-- ---------------------------------------------------------- -->
+
+
+    <script>
+
+        const percentageCircle = document.querySelector('.percentageCircle');
+        const progressValue = document.getElementById('progressValue');
+
+        // Converte o valor do texto para um número
+        const progressValueNumber = parseInt(progressValue.textContent, 10); 
+
+        if(progressValueNumber >= 0 && progressValueNumber <= 25) {
+            percentageCircle.style.border = '7px solid red';
+        } else if(progressValueNumber > 25 && progressValueNumber <= 50) {
+            percentageCircle.style.border = '7px solid orange';
+        } else if(progressValueNumber > 50 && progressValueNumber <= 75) {
+            percentageCircle.style.border = '7px solid yellow';
+        } else {
+            percentageCircle.style.border = '7px solid green';
+        }
+
+    </script>
+
+{% endblock %}

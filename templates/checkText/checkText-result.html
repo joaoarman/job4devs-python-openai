@@ -1,0 +1,190 @@
+{% extends "baseTemplate.html" %}
+
+{% block title %}
+    Página Inicial
+{% endblock %}
+
+{% block content %}
+
+<style>
+    .headerDiv-result {
+        width: 85vw;
+        max-width: 1000px;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .headerDiv-result span {
+        margin-left: auto;
+    }
+
+    .buttonsDiv {
+        display: flex;
+        flex-direction: row;
+    }
+
+    .buttonsDiv button {
+        width: 100px;
+        margin-right: auto;
+    }
+
+    .visualizeOption-div {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .btn-group {
+        margin-left: auto;
+    }
+
+    h1 {
+        margin-top: 50px;
+    }
+
+    .visualizationTypeDescription {
+        text-align: center;
+    }
+
+    .a4-page {
+        width: 85vw;
+        max-width: 1000px;
+        height: calc(85vw * 1.414); 
+        max-height: 450px;
+
+        background-color: #1212121c;
+        margin: 20px 0;
+        /* box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1); */
+        border-radius: 15px;
+        padding: 20px;
+
+        overflow-y: auto;
+    }
+
+    .a4-page p {
+        font-size: 1rem; 
+        line-height: 1.6;
+    }
+
+    [data-bs-theme="dark"] .a4-page {
+        background-color: rgb(98, 98, 98); 
+        box-shadow: 0px 0px 15px rgba(132, 132, 132, 0.201);
+    }
+
+    .visualizer-option1 {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .carousel-controls {
+        display: flex;
+        justify-content: center;
+        margin-top: 10px;
+    }
+
+    .carousel-controls button {
+        background-color: rgb(167, 54, 54);
+        border: none;
+        width: 15px;
+        height: 15px;
+        border-radius: 50%;
+        margin: 0 5px;
+        cursor: pointer;
+        opacity: 0.5;
+    }
+
+    .carousel-controls button.active {
+        opacity: 1;
+    }
+
+    .carousel-controls button:hover {
+        opacity: 1;
+    }
+
+
+  </style>
+
+    <div class="headerDiv-result">
+        <span>Visualizar: </span>
+        <div class="buttonsDiv">
+            <button type="button" class="btn btn-danger" onclick="window.history.back()">Voltar</button>
+
+            <div class="visualizeOption-div">
+                <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+                    <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" checked>
+                    <label class="btn btn-outline-danger" for="btnradio1">1</label>
+                  
+                    <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off">
+                    <label class="btn btn-outline-danger" for="btnradio2">2</label>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <h1>Textos Intepretados</h1>
+    <span id="visualizationTypeDescription" class="visualizationTypeDescription">Arraste para baixo para ver o texto extraído por cada ferramenta!</span>
+    <br>
+    <br>
+
+    <div class="visualizer-option1-div">
+        {% for extractedText in extractedTexts %}
+
+            <h6>Ferramenta {{ loop.index }}:</h6>
+            <div class="a4-page">
+                <p>{{ extractedText|safe }}</p>
+            </div>
+
+            <hr>
+       
+        {% endfor %}
+    </div>
+    
+
+    <div class="visualizer-option2-div" style="display: none;">
+        <!-- Bootstrap Carousel -->
+        <div id="pdfCarousel" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
+            {% for extractedText in extractedTexts %}
+                <div class="carousel-item {% if loop.index == 1 %}active{% endif %}">
+                <h6>Ferramenta {{ loop.index }}:</h6>
+                <div class="a4-page">
+                    <p>{{ extractedText|safe }}</p>
+                </div>
+                </div>
+            {% endfor %}
+        </div>
+        
+            
+        <div class="carousel-controls">
+            {% for i in range(extractedTexts|length) %}
+                <button type="button" data-bs-target="#pdfCarousel" data-bs-slide-to="{{ i }}" class="{% if i == 0 %}active{% endif %}" aria-label="Slide {{ i + 1 }}"></button>
+            {% endfor %}
+        </div>
+    </div>
+    
+    <script>
+        
+        const visualizerOptions = document.querySelectorAll('.btn-check');
+        const visualizationTypeDescription = document.querySelector('#visualizationTypeDescription');
+
+        visualizerOptions.forEach((option) => {
+            option.addEventListener('change', () => {
+                const visualizerOption1 = document.querySelector('.visualizer-option1-div');
+                const visualizerOption2 = document.querySelector('.visualizer-option2-div');
+
+                if (option.id === 'btnradio1') {
+                    visualizerOption1.style.display = 'block';
+                    visualizerOption2.style.display = 'none';
+                    visualizationTypeDescription.innerText = 'Arraste para baixo para visualizar os textos extraídos por cada ferramenta.';
+                } else {
+                    visualizerOption1.style.display = 'none';
+                    visualizerOption2.style.display = 'block';
+                    visualizationTypeDescription.innerText = 'Arraste para o lado para visualizar os textos extraídos por cada ferramenta.';
+                }
+            });
+        });        
+
+
+    </script>
+
+{% endblock %}

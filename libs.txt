@@ -1,0 +1,51 @@
+<!-- FLASK -->
+pip install flask
+
+<!-- OpenAi -->
+pip install openai
+
+<!--Google Gemini -->
+pip install -q -U google-generativeai
+
+<!-- Python dotenv -->
+pip install python-dotenv
+
+<!-- PDF Miner -->
+pip install pdfminer.six
+
+<!-- PyMuPDF -->
+pip install pymupdf
+
+<!-- PDFKit -->
+pip install PDFKit
+Baixar wkhtmltopdf e adicionar nas variaveis de ambiente
+https://www.youtube.com/watch?v=8VzHCqdV0VY
+
+
+PyPDF2
+PDFMiner
+Textract
+pdfplumber
+
+------------------------------------------------------------------
+Aqui estão os métodos comuns de dicionários:
+.keys() – retorna as chaves do dicionário.
+.values() – retorna os valores do dicionário.
+.items() – retorna pares chave-valor do dicionário.
+
+for project in projects.values():
+    print(f"Nome: {project['projectName']}")
+    print(f"Link: {project['projectLink']}")
+    print(f"Descrição: {project['projectDescription']}")
+    print("--------------------")
+
+
+--------------------------------------------------------------------
+A linha response.headers['Content-Disposition'] = 'inline; filename=output.pdf' define como o navegador deve lidar com o arquivo PDF que está sendo enviado na resposta HTTP. Aqui está o que cada parte dessa linha faz:
+
+Detalhamento:
+Content-Disposition: Este é um cabeçalho HTTP que indica se o conteúdo deve ser exibido diretamente no navegador ou baixado como um arquivo. Ele pode ter dois valores principais:
+
+inline: Diz ao navegador para tentar exibir o conteúdo diretamente na janela do navegador, se possível. No caso de PDFs, a maioria dos navegadores modernos possui suporte embutido para exibir PDFs sem precisar baixá-los.
+attachment: Indica ao navegador que o arquivo deve ser baixado, em vez de ser exibido.
+filename=output.pdf: Define o nome do arquivo sugerido para o download ou exibição. Se o usuário decidir salvar o arquivo (mesmo que ele seja exibido no navegador), o nome do arquivo sugerido será output.pdf. Isso é útil para dar um nome significativo ao arquivo.
