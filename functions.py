@@ -113,13 +113,13 @@ def formatProjects(projetctNames, projectLinks, projectDescriptions):
 
 def formatExperiences(companyNames, companyPositions, companyStartDates, companyEndDates, stillWorking, companyDescriptions):
     experiences = {}
-    for i in range(len(companyNames)):
+    for i in range(len(companyNames) -1, -1, -1):
+
         experiences[i] = {
             'companyName': companyNames[i],
             'companyPosition': companyPositions[i],
             'companyStartDate': companyStartDates[i],
-            'companyEndDate': 'Atual' if i < len(stillWorking) and stillWorking[i] else companyEndDates[i],
-            #'stillWorking': stillWorking[i],
+            'companyEndDate': 'Atual' if stillWorking[i] == 'on' else companyEndDates[i],
             'companyDescription': companyDescriptions[i]
         }
         

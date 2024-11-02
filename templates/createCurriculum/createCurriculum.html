@@ -215,7 +215,7 @@
 
 
     <!-- EXPERIÊNCIA PROFISSIONAL -->
-        <span class="formHeaderInfo">2. Experiência Profissional: </span>
+        <span class="formHeaderInfo">2. Experiência Profissional (Sugestão: adicionar do mais recente ou atual ao mais antigo): </span>
         <div id="professionalExperienceMainDiv" class="professionalExperienceMainDiv">
 
             <button type="button" id="addExperienceBtn" class="btn btn-danger mb-5 addExperienceBtn">Adicionar Experiência</button>
@@ -277,8 +277,6 @@
         /* --------------- EXPERIÊNCIA PROFISSIONAL --------------- */
             const addExperienceBtn = document.getElementById('addExperienceBtn');
             const professionalExperienceMainDiv = document.getElementById('professionalExperienceMainDiv');
-            const stillWorkingCheckbox = document.getElementById('stillWorkingCheckbox');
-        
             var experienceCount = 0;
 
             addExperienceBtn.addEventListener('click', () => {
@@ -302,11 +300,12 @@
 
                     <div class="col-md-6">
                         <label for="endDate_${experienceCount}" class="form-label" id="endDateLabel_${experienceCount}">Data de Término: </label>
-                        <input type="date" class="form-control" name="companyEndDate[]" id="endDate_${experienceCount}" required>
+                        <input type="date" class="form-control" name="companyEndDate[]" id="endDate_${experienceCount}">
                         <!-- Checkbox para indicar que ainda está na experiência -->
                         <div class="mt-3">
-                            <input name="stillWorking[]" class="form-check-input stillWorkingCheckbox" type="checkbox" id="stillWorking_${experienceCount}">
-                            <label class="form-check-label" for="stillWorking_${experienceCount}">
+                            <input type="hidden" name="stillWorking[]" value="off" id="stillWorking__${experienceCount}">
+                            <input class="form-check-input stillWorkingCheckbox" type="checkbox" id="_${experienceCount}">
+                            <label class="form-check-label" for="_${experienceCount}">
                                 Ainda estou nessa experiência
                             </label>
                         </div>
@@ -328,27 +327,27 @@
                 );
             });
 
+            const experienceId = e.target.id.split('_')[1];
+            const endDateInput = document.getElementById(`endDate_${experienceId}`);
+            endDateInput.required = true; 
+
             professionalExperienceMainDiv.addEventListener('change', (e) => {
-                if (e.target.classList.contains('stillWorkingCheckbox')) {
-                    const experienceId = e.target.id.split('_')[1]; // Extrai o número da experiência
-                    const endDataLabel = document.getElementById(`endDateLabel_${experienceId}`);
-                    const endDateInput = document.getElementById(`endDate_${experienceId}`);
+            if (e.target.classList.contains('stillWorkingCheckbox')) {
+                const endDateInput = document.getElementById(`endDate_${experienceId}`);
+                const stillWorkingInput = document.getElementById(`stillWorking__${experienceId}`);
 
-                    if (e.target.checked) {
-                        endDateInput.disabled = true;
-                        stillWorkingCheckbox.value = 1;
-                        
-
-                        /* endDateInput.style.display = 'none';
-                        endDataLabel.style.display = 'none'; */
-                    } else {
-                        endDateInput.disabled = false;
-                        stillWorkingCheckbox.value = 0;
-                        /* endDateInput.style.display = 'block';
-                        endDataLabel.style.display = 'block'; */
-                    }
+                if (e.target.checked) {
+                    endDateInput.value = 'Atual'; // Define o valor como "Atual"
+                    endDateInput.required = false; // Remove a obrigatoriedade do campo
+                    stillWorkingInput.value = 'on'; // Define o valor do input hidden como "on"
+                } else {
+                    endDateInput.value = ''; // Limpa o valor do campo
+                    stillWorkingInput.value = 'off'; // Define o valor do input hidden como "off"
                 }
-            });
+            }
+        });
+
+
 
             professionalExperienceMainDiv.addEventListener('click', (e) => {
                 const removeBtn = e.target.closest('.removeExperienceBtn');
