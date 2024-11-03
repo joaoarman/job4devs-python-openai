@@ -51,6 +51,13 @@
             margin-bottom: 20px;
         }
 
+        .readonly-style {
+            background-color: #74747469; /* Cor de fundo cinza claro */
+            color: #6c757d; /* Cor do texto cinza */
+            cursor: not-allowed; /* Cursor em forma de proibido */
+            pointer-events: none; /* Ignora interações do mouse */
+        }
+
         /* EXPERIÊNCIA PROFISSIONAL */
             .professionalExperienceMainDiv {
                 width: 100%;
@@ -327,22 +334,22 @@
                 );
             });
 
-            const experienceId = e.target.id.split('_')[1];
-            const endDateInput = document.getElementById(`endDate_${experienceId}`);
-            endDateInput.required = true; 
-
             professionalExperienceMainDiv.addEventListener('change', (e) => {
             if (e.target.classList.contains('stillWorkingCheckbox')) {
+                const experienceId = e.target.id.split('_')[1];
                 const endDateInput = document.getElementById(`endDate_${experienceId}`);
                 const stillWorkingInput = document.getElementById(`stillWorking__${experienceId}`);
 
                 if (e.target.checked) {
-                    endDateInput.value = 'Atual'; // Define o valor como "Atual"
-                    endDateInput.required = false; // Remove a obrigatoriedade do campo
-                    stillWorkingInput.value = 'on'; // Define o valor do input hidden como "on"
+                    endDateInput.readOnly = true;
+                    endDateInput.classList.add('readonly-style');
+                    endDateInput.required = false;
+                    stillWorkingInput.value = 'on';
+                    
                 } else {
-                    endDateInput.value = ''; // Limpa o valor do campo
-                    stillWorkingInput.value = 'off'; // Define o valor do input hidden como "off"
+                    endDateInput.readOnly = false;
+                    endDateInput.classList.remove('readonly-style');
+                    endDateInput.required = true;
                 }
             }
         });

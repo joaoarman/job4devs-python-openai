@@ -3,6 +3,7 @@ import re
 from  PyPDF2 import *
 import pdfplumber
 import fitz
+from datetime import datetime
 from pdfminer.high_level import extract_text
 from ai import gptClient, gptModel, genaiModel, PROMPT
 
@@ -100,6 +101,13 @@ def getAnalysusResults(curriculumContent, jobDescription):
 # ---------------------------------------------------------------------
 # ----------------- Functionality 3: CREATE CURRICULUM ----------------
 # ---------------------------------------------------------------------
+def format_date(date_str):
+    # Verifica se a data não é vazia e formata
+    if date_str:
+        return datetime.strptime(date_str, "%Y-%m-%d").strftime("%d/%m/%Y")
+    return ''
+
+
 def formatProjects(projetctNames, projectLinks, projectDescriptions):
     projects = {}
     for i in range(len(projetctNames)):
@@ -118,8 +126,8 @@ def formatExperiences(companyNames, companyPositions, companyStartDates, company
         experiences[i] = {
             'companyName': companyNames[i],
             'companyPosition': companyPositions[i],
-            'companyStartDate': companyStartDates[i],
-            'companyEndDate': 'Atual' if stillWorking[i] == 'on' else companyEndDates[i],
+            'companyStartDate': format_date(companyStartDates[i]),
+            'companyEndDate': 'Atual' if stillWorking[i] == 'on' else format_date(companyEndDates[i]),
             'companyDescription': companyDescriptions[i]
         }
         
@@ -128,6 +136,15 @@ def formatExperiences(companyNames, companyPositions, companyStartDates, company
 
 def formatEducations(institutions, courses, edutaionStartDates, educationEndDates, stillStudying, educationDescriptions):
     educations = {}
+
+    print('-----------------')
+    print('Names:', institutions)
+    print('Courses:', courses)
+    print('Start Dates:', edutaionStartDates)
+    print('End Dates:', educationEndDates)
+    print('Still Studying:', stillStudying)
+    print('Descriptions:', educationDescriptions)
+
     for i in range(len(institutions)):
         educations[i] = {
             'institution': institutions[i],

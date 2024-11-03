@@ -13,6 +13,11 @@
         height: 29.7cm;
         margin: 0 auto;
         padding: 1cm; 
+
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 40px;
     }
 
     header h1{
@@ -23,16 +28,38 @@
         text-align: center;
     }
 
+
+    /**/
+    /**/
+    /**/
     /* ---------- SKILLS ---------- */
     .skills-main-div {
         width: 100%;
         text-align: justify;
     }
 
+    .skills-div {
+        width: 100%;
+        margin-top: 10px;
 
+    }
+
+
+    /**/
+    /**/
+    /**/
     /* ---------- EXPERIENCES ---------- */
     .experiences-main-div {
         width: 100%;
+    }
+
+    .all-experiences {
+        width: 100%;
+        margin-top: 15px;
+
+        display: flex;
+        flex-direction: column;
+        gap: 40px;
     }
 
     .experience-div {
@@ -46,6 +73,7 @@
 
     .companyName {
         font-weight: bold;
+        text-transform: uppercase;
     }
 
     .dates {
@@ -54,14 +82,28 @@
 
     .companyPosition {
         font-style: italic;
+        font-weight: bold;
+        color: rgb(105, 105, 105);
     }
 
     .companyDescription {
+        margin-top: 10px;
         white-space: pre-wrap; /* Mantém quebras de linha inseridas manualmente */
         word-wrap: break-word; /* Quebra as palavras muito longas que ultrapassam a div */
         overflow-wrap: break-word;
         text-align: justify;
     }
+    
+
+    /**/
+    /**/
+    /**/
+    /* ---------- EDUCATION ---------- */
+    .education-main-div {
+        width: 100%;
+    }
+
+
 
 </style>
 
@@ -84,12 +126,15 @@
    <div class="skills-main-div">
         <h2>Habilidades</h2>
         <hr>
-        {% for skill in result.skills %}
-            <span>  
-                {{ skill }} 
-                {% if not loop.last %} | {% endif %}
-            </span>
-        {% endfor %}
+
+        <div class="skills-div">
+            {% for skill in result.skills %}
+                <span>  
+                    {{ skill }} 
+                    {% if not loop.last %} | {% endif %}
+                </span>
+            {% endfor %}
+        </div>
    </div>
 
 
@@ -97,28 +142,33 @@
    <div class="experiences-main-div">
         <h2>Experiências</h2>
         <hr>
-        {% for experience in result.experiences.values() %}
-            <div class="experience-div">
-                <div class="companyName-and-dates">
-                    <span class="companyName"> {{ experience.companyName }} </span>
-                    <div>
-                        <span class="dates"> ({{ experience.companyStartDate }} - {{ experience.companyEndDate }}) </span>
+        <div class="all-experiences">
+            {% for experience in result.experiences.values() %}
+                <div class="experience-div">
+                    <div class="companyName-and-dates">
+                        <span class="companyName"> {{ experience.companyName }} </span>
+                        <div>
+                            <span class="dates"> ({{ experience.companyStartDate }} - {{ experience.companyEndDate }}) </span>
+                        </div>
                     </div>
-                </div>
-                
+                    
+                    <span class="companyPosition"> {{ experience.companyPosition }} </span>
 
-                <span class="companyPosition"> {{ experience.companyPosition }} </span>
-                <br>
-                <br>
-                <br>
-                <div class="companyDescription"> {{ experience.companyDescription|safe }} </div>
-            </div>
-        {% endfor %} 
+                    <div class="companyDescription"> {{ experience.companyDescription|safe }} </div>
+                </div>
+            {% endfor %} 
+        </div>
+        
    </div>
 
 
    <!-- ---------- EDUCATION ---------- -->
-   
+    <div class="education-main-div">
+        <h2>Educação</h2>
+        <hr>
+        
+
+    </div>
 
 
    <!-- ---------- PROJECTS ---------- -->
