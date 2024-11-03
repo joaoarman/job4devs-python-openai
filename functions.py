@@ -5,7 +5,7 @@ import pdfplumber
 import fitz
 from datetime import datetime
 from pdfminer.high_level import extract_text
-from ai import gptClient, gptModel, genaiModel, PROMPT
+from ai import gptClient, gptModel, PROMPT
 
 UPLOADS_FOLDER = 'uploads'
 
@@ -149,9 +149,8 @@ def formatEducations(institutions, courses, edutaionStartDates, educationEndDate
         educations[i] = {
             'institution': institutions[i],
             'course': courses[i],
-            'edutaionStartDate': edutaionStartDates[i],
-            'educationEndDate': educationEndDates[i],
-            #'stillStudying': stillStudying[i],
+            'educationStartDate': format_date(edutaionStartDates[i]),
+            'educationEndDate': 'Cursando' if stillStudying[i] == 'on' else format_date(educationEndDates[i]),
             'educationDescription': educationDescriptions[i]
         }
     return educations

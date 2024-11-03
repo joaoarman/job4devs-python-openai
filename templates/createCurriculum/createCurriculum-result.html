@@ -103,6 +103,43 @@
         width: 100%;
     }
 
+    .all-educations {
+        width: 100%;
+        margin-top: 15px;
+
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .education-div {
+        width: 100%;
+    }
+
+    .institution {
+        font-weight: bold;
+        text-transform: uppercase;
+    }
+
+    .educationInstituiton-and-dates {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .educationCourse {
+        font-style: italic;
+        font-weight: bold;
+        color: rgb(105, 105, 105);
+    }
+
+    .educationDescription {
+        margin-top: 10px;
+        white-space: pre-wrap; /* Mantém quebras de linha inseridas manualmente */
+        word-wrap: break-word; /* Quebra as palavras muito longas que ultrapassam a div */
+        overflow-wrap: break-word;
+        text-align: justify;
+    }
+
 
 
 </style>
@@ -166,7 +203,25 @@
     <div class="education-main-div">
         <h2>Educação</h2>
         <hr>
-        
+        <div class="all-educations">
+            {% for education in result.educations.values() %}
+                <div class="education-div">
+
+                    <div class="educationInstituiton-and-dates">
+                        <span class="institution"> {{ education.institution }} </span>
+                        <div>
+                            <span class="dates"> ({{ education.educationStartDate }} - {{ education.educationEndDate }}) </span>
+                        </div>
+                    </div>
+
+                    <span class="educationCourse"> {{ education.course }} </span>
+
+                    <div class="educationDescription"> {{ education.educationDescription|safe }} </div>
+
+                </div>
+
+            {% endfor %}
+        </div>
 
     </div>
 

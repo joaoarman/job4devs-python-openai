@@ -30,8 +30,8 @@ gptModel = os.getenv("GPT_MODEL")
 # ---------------------------------------------------------------------
 # ------------------------------- GEMINI ------------------------------
 # ---------------------------------------------------------------------
-genai.configure(api_key=os.getenv("GENAI_API_KEY"))
-genaiModel = genai.GenerativeModel(os.getenv("GENAI_MODEL"))
+#genai.configure(api_key=os.getenv("GENAI_API_KEY"))
+#genaiModel = genai.GenerativeModel(os.getenv("GENAI_MODEL"))
 
 
 # ---------------------------------------------------------------------
