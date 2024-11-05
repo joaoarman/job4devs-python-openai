@@ -243,84 +243,93 @@
     
         <div class="content">
             <!-- ---------- SKILLS ---------- -->
-            <div class="skills-main-div">
-                    <h2>Habilidades</h2>
-                    <hr>
-            
-                    <div class="skills-div">
-                        {% for skill in result.skills %}
-                            <span class="skill">  
-                                {{ skill }} 
-                                {% if not loop.last %} ‎ | ‎ {% endif %}
-                            </span>
-                        {% endfor %}
-                    </div>
-            </div>
+            {% if result.skills %}
+                <div class="skills-main-div">
+                        <h2>Habilidades</h2>
+                        <hr>
+                
+                        <div class="skills-div">
+                            {% for skill in result.skills %}
+                                <span class="skill">  
+                                    {{ skill }} 
+                                    {% if not loop.last %} ‎ | ‎ {% endif %}
+                                </span>
+                            {% endfor %}
+                        </div>
+                </div>
+            {% endif %}
     
     
             <!-- ---------- EXPERIENCES ---------- -->
-            <div class="experiences-main-div">
-                <h2>Experiências</h2>
-                <hr>
-                <div class="all-experiences">
-                    {% for experience in result.experiences.values() %}
-                        <div class="experience-div">
-                            <div class="companyName-and-dates">
-                                <span class="companyName"> {{ experience.companyName }} </span>
-                                <span class="dates"> ({{ experience.companyStartDate }} - {{ experience.companyEndDate }}) </span>
+            {% if result.experiences %}
+                <div class="experiences-main-div">
+                    <h2>Experiências</h2>
+                    <hr>
+                    <div class="all-experiences">
+                        {% for experience in result.experiences.values() %}
+                            <div class="experience-div">
+                                <div class="companyName-and-dates">
+                                    <span class="companyName"> {{ experience.companyName }} </span>
+                                    <span class="dates"> ({{ experience.companyStartDate }} - {{ experience.companyEndDate }}) </span>
+                                </div>
+                                
+                                <span class="companyPosition"> {{ experience.companyPosition }} </span>
+            
+                                <div class="companyDescription"> {{ experience.companyDescription|safe }} </div>
                             </div>
-                            
-                            <span class="companyPosition"> {{ experience.companyPosition }} </span>
-        
-                            <div class="companyDescription"> {{ experience.companyDescription|safe }} </div>
-                        </div>
-                    {% endfor %} 
+                        {% endfor %} 
+                    </div>
                 </div>
-            </div>
+            {% endif %}
     
     
             <!-- ---------- EDUCATION ---------- -->
-            <div class="education-main-div">
-                <h2>Educação</h2>
-                <hr>
-                <div class="all-educations">
-                    {% for education in result.educations.values() %}
-                        <div class="education-div">
-        
-                            <div class="educationInstituiton-and-dates">
-                                <span class="institution"> {{ education.institution }} </span>
-                                <span class="dates"> ({{ education.educationStartDate }} - {{ education.educationEndDate }}) </span>
+            {% if result.educations %}
+                <div class="education-main-div">
+                    <h2>Educação</h2>
+                    <hr>
+                    <div class="all-educations">
+                        {% for education in result.educations.values() %}
+                            <div class="education-div">
+            
+                                <div class="educationInstituiton-and-dates">
+                                    <span class="institution"> {{ education.institution }} </span>
+                                    <span class="dates"> ({{ education.educationStartDate }} - {{ education.educationEndDate }}) </span>
+                                </div>
+            
+                                <span class="educationCourse"> {{ education.course }} </span>
+            
+                                <div class="educationDescription"> {{ education.educationDescription|safe }} </div>
+            
                             </div>
-        
-                            <span class="educationCourse"> {{ education.course }} </span>
-        
-                            <div class="educationDescription"> {{ education.educationDescription|safe }} </div>
-        
-                        </div>
-                    {% endfor %}
+                        {% endfor %}
+                    </div>
                 </div>
-            </div>
+            {% endif %}
     
     
             <!-- ---------- PROJECTS ---------- -->
-            <div class="projects-main-div">
-                <h2>Projetos</h2>
-                <hr>
-                <div class="all-projects">
-                    {% for project in result.projects.values() %}
-                        <div class="project-div">
-                            
-                            <span class="projectName"> {{ project.projectName }} <a href="{{ project.projectLink }}">(Link)</a></span>
+            {% if result.projects %}
+                <div class="projects-main-div">
+                    <h2>Projetos</h2>
+                    <hr>
+                    <div class="all-projects">
+                        {% for project in result.projects.values() %}
+                            <div class="project-div">
+                                
+                                <span class="projectName"> {{ project.projectName }} <a href="{{ project.projectLink }}">(Link)</a></span>
 
-                            <div class="projectDescription"> 
-                                {{ project.projectDescription|safe }}
+                                <div class="projectDescription"> 
+                                    {{ project.projectDescription|safe }}
+                                </div>
+                                
+            
                             </div>
-                            
-        
-                        </div>
-                    {% endfor %}
+                        {% endfor %}
+                    </div>
                 </div>
-            </div>
+            {% endif %}
+            
         </div>
     </body>
 </html>

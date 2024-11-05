@@ -222,7 +222,7 @@
 
 
     <!-- EXPERIÊNCIA PROFISSIONAL -->
-        <span class="formHeaderInfo">2. Experiência Profissional (Sugestão: adicionar do mais recente ou atual ao mais antigo): </span>
+        <span class="formHeaderInfo">2. Experiência Profissional: </span>
         <div id="professionalExperienceMainDiv" class="professionalExperienceMainDiv">
 
             <button type="button" id="addExperienceBtn" class="btn btn-danger mb-5 addExperienceBtn">Adicionar Experiência</button>
@@ -288,6 +288,9 @@
 
             addExperienceBtn.addEventListener('click', () => {
                 experienceCount++
+                //afterend
+                //beforebegin
+                //beforeend
                 professionalExperienceMainDiv.insertAdjacentHTML('beforeend',`
                 <div id="experience_${experienceCount}" class="professionalExperienceDiv row g-3 needs-validation" novalidate>
                     <div class="col-md-6">
@@ -567,6 +570,12 @@
                     const skillToRemove = document.getElementById(skillId);
                     if (skillToRemove) {
                         skillToRemove.remove();
+                    }
+
+                    // Remove o campo hidden correspondente
+                    const hiddenInput = document.querySelector(`input[name="skills[]"][value="${skillToRemove.innerText.trim()}"]`);
+                    if (hiddenInput) {
+                        hiddenInput.remove();
                     }
                 }
             });
