@@ -172,10 +172,16 @@ def createCurriculumResult():
         'skills': skills
     }
 
-    #return redirect(url_for('generate_pdf'))
-    return render_template('/createCurriculum/createCurriculum-result.html', result=result)
+    html_content = render_template('/createCurriculum/createCurriculum-result.html', result=result)
 
+    # Geração do PDF a partir do HTML
+    pdf = pdfkit.from_string(html_content, False)
+    # Configurar a resposta HTTP para download do PDF
+    response = make_response(pdf)
+    response.headers['Content-Type'] = 'application/pdf'
+    response.headers['Content-Disposition'] = 'inline; filename=curriculo.pdf'
 
+    return response
 
 @app.route('/createCurriculum/pdf')
 def generate_pdf():
