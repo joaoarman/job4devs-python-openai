@@ -137,14 +137,6 @@ def formatExperiences(companyNames, companyPositions, companyStartDates, company
 def formatEducations(institutions, courses, edutaionStartDates, educationEndDates, stillStudying, educationDescriptions):
     educations = {}
 
-    print('-----------------')
-    print('Names:', institutions)
-    print('Courses:', courses)
-    print('Start Dates:', edutaionStartDates)
-    print('End Dates:', educationEndDates)
-    print('Still Studying:', stillStudying)
-    print('Descriptions:', educationDescriptions)
-
     for i in range(len(institutions)):
         educations[i] = {
             'institution': institutions[i],
