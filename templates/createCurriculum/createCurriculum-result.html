@@ -73,6 +73,8 @@
                 width: 100%;
                 margin-top: 30px;
                 text-align: justify;
+
+                page-break-inside: avoid;
             }
 
             .experiences-main-div h2{
@@ -132,6 +134,8 @@
                 width: 100%;
                 margin-top: 40px;
                 text-align: justify;
+
+                page-break-inside: avoid;
             }
 
             .education-main-div h2{
@@ -142,10 +146,6 @@
             .all-educations {
                 width: 100%;
                 margin-top: 15px;
-        
-                display: flex;
-                flex-direction: column;
-                gap: 15px;
             }
         
             .education-div {
@@ -183,8 +183,47 @@
                 text-align: justify;
             }
         
-        
-        
+            
+            /**/
+            /**/
+            /**/
+            /* ---------- PROJETOS ---------- */
+            .projects-main-div {
+                width: 100%;
+                margin-top: 35px;
+                text-align: justify;
+
+                page-break-inside: avoid;
+            }
+
+            .projects-main-div h2{
+                text-align: center;
+                margin-bottom: 10px;
+            }
+
+            .all-projects {
+                width: 100%;
+                margin-top: 15px;
+            }
+
+            .project-div {
+                margin-bottom: 15px;
+            }
+
+            .projectName {
+                font-weight: bold;
+            }
+
+            .projectLink {
+                font-weight: bold;
+                color: rgb(105, 105, 105);
+                float: right;
+            }
+
+    
+
+
+
         </style>
     </head>
 
@@ -264,13 +303,24 @@
     
     
             <!-- ---------- PROJECTS ---------- -->
-            
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
+            <div class="projects-main-div">
+                <h2>Projetos</h2>
+                <hr>
+                <div class="all-projects">
+                    {% for project in result.projects.values() %}
+                        <div class="project-div">
+                            
+                            <span class="projectName"> {{ project.projectName }} <a href="{{ project.projectLink }}">(Link)</a></span>
 
+                            <div class="projectDescription"> 
+                                {{ project.projectDescription|safe }}
+                            </div>
+                            
+        
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
         </div>
     </body>
 </html>
