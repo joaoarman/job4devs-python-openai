@@ -117,7 +117,7 @@ def aiAnalysisResult():
 def createCurriculum():
     return render_template('/createCurriculum/createCurriculum.html')
 
-@app.route('/createCurriculum/result', methods=['POST'])
+@app.route('/createCurriculum/result/br', methods=['POST'])
 def createCurriculumResult():
 
     # ----- INFORMAÇÕES PESSOAIS -----
@@ -161,6 +161,88 @@ def createCurriculumResult():
 
     # ----- RESULT -----
     result = {
+        'document_header': 'cv-br',
+
+        'skills_header': 'Habilidades',
+        'experiences_header': 'Experiência Profissional',
+        'education_header': 'Educação',
+        'projects_header': 'Projetos',
+
+        'name': name,
+        'phone': phone,
+        'email': email,
+        'linkedin': linkedin,
+        'github': github,
+        'experiences': experiences,
+        'educations': educations,
+        'projects': projects,
+        'skills': skills
+    }
+
+    html_content = render_template('/createCurriculum/createCurriculum-result.html', result=result)
+
+    # Geração do PDF a partir do HTML
+    pdf = pdfkit.from_string(html_content, False)
+    # Configurar a resposta HTTP para download do PDF
+    response = make_response(pdf)
+    response.headers['Content-Type'] = 'application/pdf'
+    response.headers['Content-Disposition'] = 'inline; filename=curriculo.pdf'
+
+    return response
+
+@app.route('/createCurriculum/result/us', methods=['POST'])
+def createCurriculumResultUS():
+
+    # ----- INFORMAÇÕES PESSOAIS -----
+    name = request.form['userName']
+    phone = request.form['telephone']
+    email = request.form['email']
+    linkedin = request.form['linkedin']
+    github = request.form['github']
+
+
+    # ----- EXPERIÊNCIA PROFISSIONAL -----
+    companyNames = request.form.getlist('companyName[]')
+    companyPositions = request.form.getlist('companyPosition[]')
+    companyStartDates = request.form.getlist('companyStartDate[]')
+    companyEndDates = request.form.getlist('companyEndDate[]')
+    stillWorking = request.form.getlist('stillWorking[]')
+    companyDescriptions = request.form.getlist('companyDescription[]')
+    experiences = formatExperiencesUS(companyNames, companyPositions, companyStartDates, companyEndDates, stillWorking, companyDescriptions)
+    
+
+    # ----- FORMAÇÃO ACADÊMICA -----
+    institutions = request.form.getlist('institution[]')
+    courses = request.form.getlist('course[]')
+    edutaionStartDates = request.form.getlist('edutaionStartDate[]')
+    educationEndDates = request.form.getlist('educationEndDate[]')
+    stillStudying = request.form.getlist('stillStudying[]')
+    educationDescriptions = request.form.getlist('educationDescription[]')
+    educations = formatEducationsUS(institutions, courses, edutaionStartDates, educationEndDates, stillStudying, educationDescriptions)
+
+
+    # ----- PROJETOS -----
+    projetctNames = request.form.getlist('projetctName[]')
+    projectLinks = request.form.getlist('projectLink[]')
+    projectDescriptions = request.form.getlist('projectDescription[]')
+    projects = formatProjectsUS(projetctNames, projectLinks, projectDescriptions)
+
+
+    # ----- HABILIDADES -----
+    skills = request.form.getlist('skills[]')
+    for i in range(len(skills)):
+        skills[i] = translate_pt_to_us(skills[i])
+
+
+    # ----- RESULT -----
+    result = {
+        'document_header': 'cv-us',
+
+        'skills_header': 'Skills',
+        'experiences_header': 'Professional Experience',
+        'education_header': 'Education',
+        'projects_header': 'Personal Projects',
+
         'name': name,
         'phone': phone,
         'email': email,

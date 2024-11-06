@@ -4,6 +4,8 @@ from  PyPDF2 import *
 import pdfplumber
 import fitz
 from datetime import datetime
+from deep_translator import GoogleTranslator
+import unicodedata
 from pdfminer.high_level import extract_text
 from ai import gptClient, gptModel, PROMPT
 
@@ -108,6 +110,12 @@ def format_date(date_str):
     return ''
 
 
+def translate_pt_to_us(text):
+    translated_text = GoogleTranslator(source='pt', target='en').translate(text)
+    return translated_text
+
+
+# ----- BR
 def formatProjects(projetctNames, projectLinks, projectDescriptions):
     projects = {}
     for i in range(len(projetctNames)):
@@ -147,6 +155,46 @@ def formatEducations(institutions, courses, edutaionStartDates, educationEndDate
         }
     return educations
 
+
+# ----- US
+def formatProjectsUS(projetctNames, projectLinks, projectDescriptions):
+    projects = {}
+    for i in range(len(projetctNames)):
+        projects[i] = {
+            'projectName': projetctNames[i],
+            'projectLink': projectLinks[i],
+            'projectDescription': translate_pt_to_us(projectDescriptions[i])
+        }
+    return projects
+
+
+def formatExperiencesUS(companyNames, companyPositions, companyStartDates, companyEndDates, stillWorking, companyDescriptions):
+    experiences = {}
+    for i in range(len(companyNames) -1, -1, -1):
+
+        experiences[i] = {
+            'companyName': companyNames[i],
+            'companyPosition': translate_pt_to_us(companyPositions[i]),
+            'companyStartDate': format_date(companyStartDates[i]),
+            'companyEndDate': translate_pt_to_us('Atual') if stillWorking[i] == 'on' else format_date(companyEndDates[i]),
+            'companyDescription': translate_pt_to_us(companyDescriptions[i])
+        }
+        
+    return experiences
+
+
+def formatEducationsUS(institutions, courses, edutaionStartDates, educationEndDates, stillStudying, educationDescriptions):
+    educations = {}
+
+    for i in range(len(institutions)):
+        educations[i] = {
+            'institution': translate_pt_to_us(institutions[i]),
+            'course': translate_pt_to_us(courses[i]),
+            'educationStartDate': format_date(edutaionStartDates[i]),
+            'educationEndDate': translate_pt_to_us('Cursando') if stillStudying[i] == 'on' else format_date(educationEndDates[i]),
+            'educationDescription': translate_pt_to_us(educationDescriptions[i])
+        }
+    return educations
 
 
     

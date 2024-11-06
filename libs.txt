@@ -21,6 +21,8 @@ pip install PDFKit
 Baixar wkhtmltopdf e adicionar nas variaveis de ambiente
 https://www.youtube.com/watch?v=8VzHCqdV0VY
 
+pip install googletrans==4.0.0-rc1
+
 
 PyPDF2
 PDFMiner

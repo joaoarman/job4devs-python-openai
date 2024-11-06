@@ -57,7 +57,7 @@
             cursor: not-allowed; /* Cursor em forma de proibido */
             pointer-events: none; /* Ignora interações do mouse */
         }
-
+        
         /* EXPERIÊNCIA PROFISSIONAL */
             .professionalExperienceMainDiv {
                 width: 100%;
@@ -134,6 +134,14 @@
                 gap: 5px;
             }
 
+            /* GENERATE BTNS */
+            .generateButtons {
+                width: 100%;
+                display: flex;
+                flex-direction: row;
+                justify-content: left;
+                gap: 20px;
+            }
  
 
     </style>
@@ -149,9 +157,9 @@
 
     <span class="formHeaderInfo">Informações Pessoais</span>
 
-    <form id="createCurriculumForm" action="/createCurriculum/result" method="post" target="_blank" enctype="multipart/form-data">
+    <form id="createCurriculumForm" target="_blank" enctype="multipart/form-data">
 
-    <!-- INFORMAÇÕES PESSOAIS -->
+        <!-- INFORMAÇÕES PESSOAIS -->
         <div class="personalInfosDiv row g-3 needs-validation" novalidate>
             
             <!-- Nome -->
@@ -237,7 +245,7 @@
 
         <br>
 
-    <!-- EXPERIÊNCIA PROFISSIONAL -->
+        <!-- EXPERIÊNCIA PROFISSIONAL -->
         <span class="formHeaderInfo">Experiência Profissional: </span>
         <div id="professionalExperienceMainDiv" class="professionalExperienceMainDiv">
 
@@ -247,7 +255,7 @@
         <br>
 
 
-    <!-- EDUCAÇÃO -->
+        <!-- EDUCAÇÃO -->
         <span class="formHeaderInfo">Educação: </span>
         <div id="educationExperienceMainDiv" class="educationExperienceMainDiv" novalidate>
             
@@ -257,7 +265,7 @@
         <br>
     
 
-    <!-- PROJETOS -->
+        <!-- PROJETOS -->
         <span class="formHeaderInfo">Projetos: </span>
         <div id="personalProjetctsMainDiv" class="personalProjetctsMainDiv" novalidate>
             
@@ -266,10 +274,15 @@
 
         <br>
         <br>
-        <br>
         
-        <input type="submit" id="submitBtn" class="btn btn-danger" value="Gerar Currículo"></input>
+        <!-- <input type="submit" id="submitBtn" class="btn btn-danger" value="Gerar Currículo"></input> -->
     </form>
+
+        <div class="generateButtons">
+            <button id="submitBtn-br" class="btn btn-danger">Gerar <img src="https://flagcdn.com/br.svg" alt="Bandeira do BR" width="30"></button>
+            <button id="submitBtn-us" class="btn btn-danger">Gerar <img src="https://flagcdn.com/us.svg" alt="Bandeira do US" width="30"></button>
+        </div>      
+
 
         <br>
         <br>
@@ -593,6 +606,29 @@
         /* --------------- FORM SUBMIT ---------------*/   
         const form = document.getElementById('createCurriculumForm');
         const inputFields = document.querySelectorAll('#createCurriculumForm input');
+
+        //
+        //
+        //
+
+        const submitBtnBR = document.getElementById('submitBtn-br');
+        const submitBtnUS = document.getElementById('submitBtn-us');
+
+        submitBtnBR.addEventListener('click', () => {
+            form.action = '/createCurriculum/result/br';
+            form.method = 'post';
+            form.requestSubmit();
+        });
+
+        submitBtnUS.addEventListener('click', () => {
+            form.action = '/createCurriculum/result/us';
+            form.method = 'post';
+            form.requestSubmit();
+        });
+
+        //
+        //
+        //
 
         inputFields.forEach(input => {
             input.addEventListener('keypress', function(e) {

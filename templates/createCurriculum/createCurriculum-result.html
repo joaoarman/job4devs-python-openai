@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Document</title>
+        <title> {{ result.document_header }}</title>
 
         <style>
 
@@ -245,7 +245,7 @@
             <!-- ---------- SKILLS ---------- -->
             {% if result.skills %}
                 <div class="skills-main-div">
-                        <h2>Habilidades</h2>
+                        <h2>{{ result.skills_header }}</h2>
                         <hr>
                 
                         <div class="skills-div">
@@ -263,7 +263,7 @@
             <!-- ---------- EXPERIENCES ---------- -->
             {% if result.experiences %}
                 <div class="experiences-main-div">
-                    <h2>Experiências</h2>
+                    <h2>{{ result.experiences_header }}</h2>
                     <hr>
                     <div class="all-experiences">
                         {% for experience in result.experiences.values() %}
@@ -286,7 +286,7 @@
             <!-- ---------- EDUCATION ---------- -->
             {% if result.educations %}
                 <div class="education-main-div">
-                    <h2>Educação</h2>
+                    <h2>{{ result.education_header }}</h2>
                     <hr>
                     <div class="all-educations">
                         {% for education in result.educations.values() %}
@@ -311,7 +311,7 @@
             <!-- ---------- PROJECTS ---------- -->
             {% if result.projects %}
                 <div class="projects-main-div">
-                    <h2>Projetos</h2>
+                    <h2>{{ result.projects_header }}</h2>
                     <hr>
                     <div class="all-projects">
                         {% for project in result.projects.values() %}
