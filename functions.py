@@ -129,7 +129,7 @@ def formatProjects(projetctNames, projectLinks, projectDescriptions):
 
 def formatExperiences(companyNames, companyPositions, companyStartDates, companyEndDates, stillWorking, companyDescriptions):
     experiences = {}
-    for i in range(len(companyNames) -1, -1, -1):
+    for i in range(len(companyNames)):
 
         experiences[i] = {
             'companyName': companyNames[i],

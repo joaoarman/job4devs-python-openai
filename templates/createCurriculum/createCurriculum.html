@@ -68,11 +68,10 @@
                 margin-left: auto;
             }
 
-            .removeExperienceBtnDiv {
-                width: 100%;
-
+            .experienceButtons {
                 display: flex;
-                justify-content: flex-end;
+                justify-content: space-between;
+                align-items: center;
             }
             
             
@@ -343,16 +342,67 @@
                         <textarea class="form-control" name="companyDescription[]" id="description_${experienceCount}" rows="3" required></textarea>
                     </div>
 
-                    <div class="removeExperienceBtnDiv">
-                        <button type="button" class="btn btn-danger removeExperienceBtn" experience-id="experience_${experienceCount}">
-                            <i class="bi bi-trash removeExperienceIcon"></i>
-                        </button>
+
+                    <div class="experienceButtons">
+                        <div class="experienceControls">
+                            <button type="button" class="btn btn-secondary moveUpBtn" experience-id="experience_${experienceCount}">
+                                <i class="bi bi-arrow-up"></i>
+                            </button>
+                            <button type="button" class="btn btn-secondary moveDownBtn" experience-id="experience_${experienceCount}">
+                                <i class="bi bi-arrow-down"></i>
+                            </button>
+                        </div>
+                        
+
+                        <div class="removeExperienceBtnDiv">
+                            <button type="button" class="btn btn-danger removeExperienceBtn" experience-id="experience_${experienceCount}">
+                                <i class="bi bi-trash removeExperienceIcon"></i>
+                            </button>
+                        </div>
                     </div>
-                    
+
+
                     <hr class="styled-hr2">
                 </div>`
                 );
             });
+
+            professionalExperienceMainDiv.addEventListener('click', (e) => {
+
+                // Remover experiência
+                const removeBtn = e.target.closest('.removeExperienceBtn');
+                if (removeBtn) {
+                    const experienceId = removeBtn.getAttribute('experience-id');
+                    const experienceDiv = document.getElementById(experienceId);
+                    if (experienceDiv) {
+                        experienceDiv.remove();
+                    }
+                }
+
+                // Mover para cima
+                const moveUpBtn = e.target.closest('.moveUpBtn');
+                if (moveUpBtn) {
+                    const experienceId = moveUpBtn.getAttribute('experience-id');
+                    const experienceDiv = document.getElementById(experienceId);
+
+                    if (experienceDiv.previousElementSibling && experienceDiv.previousElementSibling.classList.contains('professionalExperienceDiv')) {
+                        professionalExperienceMainDiv.insertBefore(experienceDiv, experienceDiv.previousElementSibling);
+                    }
+                }
+
+                // Mover para baixo
+                const moveDownBtn = e.target.closest('.moveDownBtn');
+                if (moveDownBtn) {
+                    const experienceId = moveDownBtn.getAttribute('experience-id');
+                    const experienceDiv = document.getElementById(experienceId);
+
+                    if (experienceDiv.nextElementSibling && experienceDiv.nextElementSibling.classList.contains('professionalExperienceDiv')) {
+                        professionalExperienceMainDiv.insertBefore(experienceDiv.nextElementSibling, experienceDiv);
+                    }
+                }
+            });
+
+
 
             professionalExperienceMainDiv.addEventListener('change', (e) => {
             if (e.target.classList.contains('stillWorkingCheckbox')) {
@@ -373,19 +423,6 @@
                 }
             }
         });
-
-
-
-            professionalExperienceMainDiv.addEventListener('click', (e) => {
-                const removeBtn = e.target.closest('.removeExperienceBtn');
-                if (removeBtn) {
-                    const experienceId = removeBtn.getAttribute('experience-id');
-                    const experienceDiv = document.getElementById(experienceId); 
-                    if (experienceDiv) {
-                        experienceDiv.remove(); 
-                    }
-                }
-            });
 
 
         /**/
